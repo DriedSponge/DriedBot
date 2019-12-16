@@ -11,8 +11,8 @@ client.on('message', (msg) =>{
 
     var cmds = [
         ["!advertise", "To advertise on this server, go to https://driedsponge.net/advertise.php", "This will give you the link to advertise"],
-        ["!hello", "Hello"+ msg.author],
-        ["Who has the best bot of all time?", "<@283710670409826304> does!"]
+        ["!hello", "Hello"+ msg.author, "Say hello to the bot"],
+        ["Who has the best bot of all time?", "<@283710670409826304> does!", "You already know the answer to this one."]
        ];
 
         for(k in cmds){
@@ -22,6 +22,21 @@ client.on('message', (msg) =>{
                 }else if(msg.content === cmds[k][0]){
                     msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
                 }
+    }
+    //Help command
+    if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
+      
+        const embed = new RichEmbed()
+        .setTitle('Commands')
+        .setColor(0x007BFF)
+        .setDescription('**Here is the list of all of our commands:**')
+        .setFooter("This message is approved by DriedSponge");
+        for(k in cmds){
+          embed.addField(cmds[k][0],cmds[k][2])
+        }
+        msg.author.send(embed);                 
+    }else if(msg.content === "!help"){
+        msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
     }
 });
 // Remeber member represents the server
