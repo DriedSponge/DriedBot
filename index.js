@@ -39,7 +39,7 @@ client.on('message', (msg) =>{
             let kreason = args.join(" ").slice(22);
             let channel = member.guild.channels.find(ch => ch.name === 'discord-logs');
             let kickembed = new RichEmbed()
-            .setTitle('Kick '+ user.username)
+            .setTitle('Kicked '+ user.username)
             .setColor(0x007BFF)
             .addField("Admin",msg.author,true)
             .addField("User",user,true)
