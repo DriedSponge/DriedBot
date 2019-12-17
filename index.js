@@ -31,7 +31,7 @@ client.on('message', (msg) =>{
       let messageArray = msg.content.split(" ");
       let args = messageArray.slice(1);
       let reason = args.join(" ").slice(22);
-      const logchannel = member.guild.channels.find(ch => ch.name === 'discord-logs');
+      let logchannel = client.channels.find(ch => ch.name === 'discord-logs');
       //Kick
       if (msg.content.startsWith('!kick') && msg.member.hasPermission(['KICK_MEMBERS'])) {
         const user = msg.mentions.users.first();
