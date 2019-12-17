@@ -30,7 +30,6 @@ client.on('message', (msg) =>{
     //Admin commands
       //Kick
       if (msg.content.startsWith('!kick') && msg.member.hasPermission(['KICK_MEMBERS'])) {
-        console.log('This member can kick');  
         const user = msg.mentions.users.first();
           if (user) {
             const member = msg.guild.member(user);
@@ -45,7 +44,6 @@ client.on('message', (msg) =>{
             .addField("Admin",msg.author,true)
             .addField("User",user,true)
             .addField("Reason",kreason,true)
-            .setFooter("This message is approved by DriedSponge");
             channel.send(kickembed);
             msg.channel.send(user+" has been kicked from the server!");
             member.kick(kreason);
@@ -68,7 +66,6 @@ client.on('message', (msg) =>{
         .setTitle('Commands')
         .setColor(0x007BFF)
         .setDescription('**Here is the list of all of our commands:**')
-        .setFooter("This message is approved by DriedSponge");
         for(k in cmds){
           embed.addField(cmds[k][0],cmds[k][2])
         }
