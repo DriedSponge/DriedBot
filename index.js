@@ -5,7 +5,11 @@ const token = 'NjU1ODYzMTg5NjYxMTU1MzI5.XfaU7Q.tQvV1UpH3A0KcgjBrkau176n_no';
 const client = new Discord.Client();
 
 
+client.on('ready', () =>{
+  console.log('Bot is now connected')
+  client.user.setPresence({ status: 'online', game: { name: '!help | DriedSponge.net' } });
 
+});
 
 client.on('message', (msg) =>{
 
@@ -20,9 +24,43 @@ client.on('message', (msg) =>{
                 if(msg.content === cmds[k][0] && msg.channel.name === 'bot-cmds'){
                     msg.channel.send(cmds[k][1]);                   
                 }else if(msg.content === cmds[k][0]){
-                    msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
+                    msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
                 }
     }
+    //Admin commands
+      //Kick
+      if (msg.content.startsWith('!kick') && msg.member.hasPermission(['KICK_MEMBERS'])) {
+        console.log('This member can kick');  
+        const user = msg.mentions.users.first();
+          if (user) {
+            const member = msg.guild.member(user);
+            if(member){
+            let messageArray = msg.content.split(" ");
+            let args = messageArray.slice(1);
+            let kreason = args.join(" ").slice(22);
+            let channel = member.guild.channels.find(ch => ch.name === 'discord-logs');
+            let kickembed = new RichEmbed()
+            .setTitle('Kick '+ user.username)
+            .setColor(0x007BFF)
+            .addField("Admin",msg.author,true)
+            .addField("User",user,true)
+            .addField("Reason",kreason,true)
+            .setFooter("This message is approved by DriedSponge");
+            channel.send(kickembed);
+            msg.channel.send(user+" has been kicked from the server!");
+            member.kick(kreason);
+            }else{
+              msg.reply("This member does not exist");
+            }
+          }else{
+            msg.reply("You did not mention a user");
+          }
+      }else if(msg.content.startsWith('!kick')){
+        msg.reply("Bro don't even try");
+      }
+
+
+
     //Help command
     if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
       
@@ -34,10 +72,12 @@ client.on('message', (msg) =>{
         for(k in cmds){
           embed.addField(cmds[k][0],cmds[k][2])
         }
-        msg.author.send(embed);                 
-    }else if(msg.content === "!help"){
-        msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
-    }
+        
+        msg.reply(embed);               
+      }else if(msg.content === "!help"){
+          msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
+      }
+
 });
 // Remeber member represents the server
 client.on('guildMemberAdd', member => {
@@ -48,9 +88,9 @@ client.on('guildMemberAdd', member => {
       .setTitle('Welcome to my man cave!')
       .setColor(0x007BFF)
       .setDescription('Welcome to my man cave! Please be sure to review the rules, thank you! Here are some useful links:')
-      .addField(`My Website`,`https://driedsponge.net`,true)
-      .addField(`Discord Invite Link`,`https://driedsponge.net/discord`,true)
-      .addField(`Advertise in my discord`,`https://driedsponge.net/advertise.php`,true)
+      .addField(`My Website`,`https://driedsponge.net`)
+      .addField(`Discord Invite Link`,`https://driedsponge.net/discord`)
+      .addField(`Advertise in my discord`,`https://driedsponge.net/advertise.php`)
       .setFooter("This message is approved by DriedSponge");
     member.send(embed);
   });
@@ -62,10 +102,6 @@ client.on('guildMemberAdd', member => {
     
   });
 
-client.on('ready', () =>{
-    console.log('Bot is now connected')
-    client.user.setPresence({ status: 'online', game: { name: 'DriedSponge.net' } });
 
-});
 
 client.login(token);
