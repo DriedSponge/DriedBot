@@ -14,15 +14,20 @@ client.on('ready', () =>{
 client.on('message', (msg) =>{
 
     var cmds = [
-        ["!advertise", "To advertise on this server, go to https://driedsponge.net/advertise.php", "This will give you the link to advertise"],
-        ["!hello", "Hello"+ msg.author, "Say hello to the bot"],
-        ["Who has the best bot of all time?", "<@283710670409826304> does!", "You already know the answer to this one."]
+        ["!advertise", "To advertise on this server, go to https://driedsponge.net/advertise.php"],
+        ["!hello", "Hello"+ msg.author],
+        ["Who has the best bot of all time?", "<@283710670409826304> does!"]
        ];
-      
+       var cmdshelp = [
+        ["!advertise", "This will give you the link to advertise"],
+        ["!hello", "Say hello to the bot"],
+        ["Who has the best bot of all time?","You already know the answer to this one."],
+        ["!lookup [SteamID, ID64, URL, Custom URL]","Lookup the information on someone's steam profile."]
+       ];
         for(k in cmds){
 
                 if(msg.content === cmds[k][0] && msg.channel.name === 'bot-cmds'){
-                    msg.channel.send(cmds[k][1]);                   
+                  msg.channel.send(cmds[k][1]);
                 }else if(msg.content === cmds[k][0]){
                     msg.delete();
                     msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
@@ -70,8 +75,8 @@ client.on('message', (msg) =>{
         .setTitle('Commands')
         .setColor(0x007BFF)
         .setDescription('**Here is the list of all of our commands:**')
-        for(k in cmds){
-          embed.addField(cmds[k][0],cmds[k][2])
+        for(k in cmdshelp){
+          embed.addField(cmdshelp[k][0],cmdshelp[k][1])
         }
         
         msg.reply(embed);               
@@ -82,7 +87,26 @@ client.on('message', (msg) =>{
         });
     }
 
+    //Advanced commands
+    if(msg.content.startsWith('!lookup') && msg.channel.name === 'bot-cmds'){
+      let messageArray = msg.content.split(" ");
+      let args = messageArray.slice(1);
+      msg.reply("https://driedsponge.net/controller.php?id="+args);  
+             
+    }else if(msg.content === "!lookup"){
+      msg.delete();
+      msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
+      msg.delete(7000)
+      
+      });
+  }
+
 });
+
+
+
+
+
 // Remeber member represents the server
 client.on('guildMemberAdd', member => {
     // Send the message to a designated channel on a server:
