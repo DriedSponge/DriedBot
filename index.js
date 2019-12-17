@@ -25,7 +25,9 @@ client.on('message', (msg) =>{
                     msg.channel.send(cmds[k][1]);                   
                 }else if(msg.content === cmds[k][0]){
                     msg.delete();
-                    msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
+                    msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
+                    msg.delete(7000)
+                    });
                 }
     }
     //Admin commands
@@ -74,9 +76,11 @@ client.on('message', (msg) =>{
         
         msg.reply(embed);               
       }else if(msg.content === "!help"){
-         msg.delete();
-          msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
-      }
+        msg.delete();
+        msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
+        msg.delete(7000)
+        });
+    }
 
 });
 // Remeber member represents the server
