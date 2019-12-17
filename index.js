@@ -11,6 +11,19 @@ client.on('ready', () =>{
 
 });
 
+var mysql = require('mysql');
+
+var conn = mysql.createConnection({
+  host: "db.hexaneweb.com",
+  user: "driedspo_netuser",
+  password: "U7MQioT0uiaoUzzdKnR3sXEOIts4Jt08"
+});
+
+conn.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
+
 client.on('message', (msg) =>{
 
     var cmds = [
