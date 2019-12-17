@@ -18,7 +18,7 @@ client.on('message', (msg) =>{
         ["!hello", "Hello"+ msg.author, "Say hello to the bot"],
         ["Who has the best bot of all time?", "<@283710670409826304> does!", "You already know the answer to this one."]
        ];
-
+      
         for(k in cmds){
 
                 if(msg.content === cmds[k][0] && msg.channel.name === 'bot-cmds'){
@@ -28,25 +28,26 @@ client.on('message', (msg) =>{
                 }
     }
     //Admin commands
+      let messageArray = msg.content.split(" ");
+      let args = messageArray.slice(1);
+      let reason = args.join(" ").slice(22);
+      const logchannel = member.guild.channels.find(ch => ch.name === 'discord-logs');
       //Kick
       if (msg.content.startsWith('!kick') && msg.member.hasPermission(['KICK_MEMBERS'])) {
         const user = msg.mentions.users.first();
           if (user) {
             const member = msg.guild.member(user);
             if(member){
-            let messageArray = msg.content.split(" ");
-            let args = messageArray.slice(1);
-            let kreason = args.join(" ").slice(22);
-            let channel = member.guild.channels.find(ch => ch.name === 'discord-logs');
             let kickembed = new RichEmbed()
             .setTitle('Kicked '+ user.tag)
             .setColor(0xFF0000)
+            .setThumbnail(user.avatarURL)
             .addField("Admin",msg.author,true)
             .addField("User",user,true)
-            .addField("Reason",kreason,true)
-            channel.send(kickembed);
+            .addField("Reason",reason,true)
+            logchannel.send(kickembed);
             msg.channel.send(user+" has been kicked from the server!");
-            member.kick(kreason);
+            member.kick(reason);
             }else{
               msg.reply("This member does not exist");
             }
