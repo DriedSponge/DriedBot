@@ -24,6 +24,7 @@ client.on('message', (msg) =>{
                 if(msg.content === cmds[k][0] && msg.channel.name === 'bot-cmds'){
                     msg.channel.send(cmds[k][1]);                   
                 }else if(msg.content === cmds[k][0]){
+                    msg.delete();
                     msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
                 }
     }
