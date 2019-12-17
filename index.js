@@ -74,6 +74,7 @@ client.on('message', (msg) =>{
         
         msg.reply(embed);               
       }else if(msg.content === "!help"){
+         msg.delete();
           msg.channel.send(msg.author+' Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds'));
       }
 
