@@ -11,18 +11,17 @@ client.on('ready', () =>{
 
 });
 
-var mysql = require('mysql');
+// var mysql = require('mysql');
 
-var conn = mysql.createConnection({
+/* var conn = mysql.createConnection({
   host: "db.hexaneweb.com",
   user: "driedspo_netuser",
   password: "U7MQioT0uiaoUzzdKnR3sXEOIts4Jt08"
 });
 
 conn.connect(function(err) {
-  if (err) throw err;
   console.log("Connected!");
-});
+}); */
 
 client.on('message', (msg) =>{
 
@@ -78,7 +77,31 @@ client.on('message', (msg) =>{
       }else if(msg.content.startsWith('!kick')){
         msg.reply("Bro don't even try");
       }
-
+      //BAN
+      if (msg.content.startsWith('!ban') && msg.member.hasPermission(['BAN_MEMBERS'])) {
+        const user = msg.mentions.users.first();
+          if (user) {
+            const member = msg.guild.member(user);
+            if(member){
+            let kickembed = new RichEmbed()
+            .setTitle('Banned '+ user.tag)
+            .setColor(0xFF0000)
+            .setThumbnail(user.avatarURL)
+            .addField("Admin",msg.author,true)
+            .addField("User",user,true)
+            .addField("Reason",reason,true)
+            logchannel.send(kickembed);
+            msg.channel.send(user+" has been banned from the server!");
+            member.ban(reason);
+            }else{
+              msg.reply("This member does not exist");
+            }
+          }else{
+            msg.reply("You did not mention a user");
+          }
+      }else if(msg.content.startsWith('!ban')){
+        msg.reply("Bro don't even try");
+      }
 
 
     //Help command
