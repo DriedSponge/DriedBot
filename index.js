@@ -78,6 +78,7 @@ client.on('message', (msg) =>{
         msg.reply("Bro don't even try");
       }
       //BAN
+      
       if (msg.content.startsWith('!ban') && msg.member.hasPermission(['BAN_MEMBERS'])) {
         const user = msg.mentions.users.first();
           if (user) {
