@@ -69,7 +69,11 @@ if(msg.author.bot === false){
               .setThumbnail(user.avatarURL)
               .addField("Admin",msg.author,true)
               .addField("User",user,true)
-              .addField("Reason",reason,true)
+              if(reason){
+                kickembed.addField("Reason",reason,true)
+              }else{
+                kickembed.addField("Reason","Unspecified",true)
+              }
               logchannel.send(kickembed);
               msg.channel.send(user+" has been "+admcmds[k][4] +" from the server!");
               admcmds[k][3]();
