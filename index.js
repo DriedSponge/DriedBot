@@ -24,7 +24,7 @@ conn.connect(function(err) {
 }); */
 
 client.on('message', (msg) =>{
-
+if(msg.author.bot === false){
     var cmds = [
         ["!advertise", "To advertise on this server, go to https://driedsponge.net/advertise.php"],
         ["!hello", "Hello"+ msg.author],
@@ -48,62 +48,41 @@ client.on('message', (msg) =>{
                 }
     }
     //Admin commands
+
       let messageArray = msg.content.split(" ");
       let args = messageArray.slice(1);
       let reason = args.join(" ").slice(22);
       let logchannel = client.channels.find(ch => ch.name === 'discord-logs');
-      //Kick
-      if (msg.content.startsWith('!kick') && msg.member.hasPermission(['KICK_MEMBERS'])) {
-        const user = msg.mentions.users.first();
-          if (user) {
-            const member = msg.guild.member(user);
-            if(member){
-            let kickembed = new RichEmbed()
-            .setTitle('Kicked '+ user.tag)
-            .setColor(0xFF0000)
-            .setThumbnail(user.avatarURL)
-            .addField("Admin",msg.author,true)
-            .addField("User",user,true)
-            .addField("Reason",reason,true)
-            logchannel.send(kickembed);
-            msg.channel.send(user+" has been kicked from the server!");
-            member.kick(reason);
+      var user = msg.mentions.users.first();
+      var member = msg.guild.member(user);
+      var admcmds = [
+        ["!ban",  "Banned ", "BAN_MEMBERS",  function() {member.ban(reason)}, "banned"],
+        ["!kick",  "Kicked ", "KICK_MEMBERS",  function() {member.kick(reason)}, "kicked"]
+       ];
+       for(k in admcmds){
+        if (msg.content.startsWith(admcmds[k][0]) && msg.member.hasPermission([admcmds[k][2]])) {
+            if (user) {
+              if(member){
+              let kickembed = new RichEmbed()
+              .setTitle(admcmds[k][1] + user.tag)
+              .setColor(0xFF0000)
+              .setThumbnail(user.avatarURL)
+              .addField("Admin",msg.author,true)
+              .addField("User",user,true)
+              .addField("Reason",reason,true)
+              logchannel.send(kickembed);
+              msg.channel.send(user+" has been "+admcmds[k][4] +" from the server!");
+              admcmds[k][3]();
+              }else{
+                msg.reply("This member does not exist");
+              }
             }else{
-              msg.reply("This member does not exist");
+              msg.reply("You did not mention a user");
             }
-          }else{
-            msg.reply("You did not mention a user");
-          }
-      }else if(msg.content.startsWith('!kick')){
-        msg.reply("Bro don't even try");
-      }
-      //BAN
-      
-      if (msg.content.startsWith('!ban') && msg.member.hasPermission(['BAN_MEMBERS'])) {
-        const user = msg.mentions.users.first();
-          if (user) {
-            const member = msg.guild.member(user);
-            if(member){
-            let kickembed = new RichEmbed()
-            .setTitle('Banned '+ user.tag)
-            .setColor(0xFF0000)
-            .setThumbnail(user.avatarURL)
-            .addField("Admin",msg.author,true)
-            .addField("User",user,true)
-            .addField("Reason",reason,true)
-            logchannel.send(kickembed);
-            msg.channel.send(user+" has been banned from the server!");
-            member.ban(reason);
-            }else{
-              msg.reply("This member does not exist");
-            }
-          }else{
-            msg.reply("You did not mention a user");
-          }
-      }else if(msg.content.startsWith('!ban')){
-        msg.reply("Bro don't even try");
-      }
-
+        }else if(msg.content.startsWith(admcmds[k][0])){
+          msg.reply("Bro don't even try");
+        }
+    }
 
     //Help command
     if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
@@ -137,7 +116,7 @@ client.on('message', (msg) =>{
       
       });
   }
-
+}
 });
 
 
@@ -145,10 +124,10 @@ client.on('message', (msg) =>{
 
 
 // Remeber member represents the server
-client.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', newmember => {
     // Send the message to a designated channel on a server:
-    const channel = member.guild.channels.find(ch => ch.name === 'hello');
-    channel.send(`**Welcome to the server,** ${member}. We now have **${member.guild.memberCount}** members!`);
+    const channel = newmember.guild.channels.find(ch => ch.name === 'hello');
+    channel.send(`**Welcome to the server,** ${newmember}. We now have **${newmember.guild.memberCount}** members!`);
     const embed = new RichEmbed()
       .setTitle('Welcome to my man cave!')
       .setColor(0x007BFF)
@@ -157,13 +136,13 @@ client.on('guildMemberAdd', member => {
       .addField(`Discord Invite Link`,`https://driedsponge.net/discord`)
       .addField(`Advertise in my discord`,`https://driedsponge.net/advertise.php`)
       .setFooter("This message is approved by DriedSponge");
-    member.send(embed);
+      newmember.send(embed);
   });
 
-  client.on('guildMemberRemove', member => {
+  client.on('guildMemberRemove', oldmember => {
     // Send the message to a designated channel on a server:
-    const channel = member.guild.channels.find(ch => ch.name === 'discord-logs');
-    channel.send(`${member} left the server. We now have **${member.guild.memberCount}** members.`);
+    const channel = oldmember.guild.channels.find(ch => ch.name === 'discord-logs');
+    channel.send(`${oldmember} left the server. We now have **${oldmember.guild.memberCount}** members.`);
     
   });
 
