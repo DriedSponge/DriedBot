@@ -39,48 +39,7 @@ if(msg.author.bot) return;
     let args = messageArray.slice(1);     
     let cmd = client.commands.get(command.slice(prefix.length));
         if(cmd) cmd.run(client,msg,args);
- //let reason = args.join(" ").slice(22);
-     // let logchannel = client.channels.find(ch => ch.name === 'discord-logs');
-     // var user = msg.mentions.users.first();
-     // var member = msg.guild.member(user);
-                
-    
-    //Admin commands
-
-      
-    //   var admcmds = [
-    //     ["!ban",  "Banned ", "BAN_MEMBERS",  function() {member.ban(reason)}, "banned"]
-    //    ];
-    //    for(k in admcmds){
-    //     if (msg.content.startsWith(admcmds[k][0]) && msg.member.hasPermission([admcmds[k][2]])) {
-    //         if (user) {
-    //           if(member){
-    //           let kickembed = new RichEmbed()
-    //           .setTitle(admcmds[k][1] + user.tag)
-    //           .setColor(0xFF0000)
-    //           .setThumbnail(user.avatarURL)
-    //           .addField("Admin",msg.author,true)
-    //           .addField("User",user,true)
-    //           if(reason){
-    //             kickembed.addField("Reason",reason,true)
-    //           }else{
-    //             kickembed.addField("Reason","Unspecified",true)
-    //           }
-    //           logchannel.send(kickembed);
-    //           msg.channel.send(user+" has been "+admcmds[k][4] +" from the server!");
-    //           admcmds[k][3]();
-    //           }else{
-    //             msg.reply("This member does not exist");
-    //           }
-    //         }else{
-    //           msg.reply("You did not mention a user");
-    //         }
-    //     }else if(msg.content.startsWith(admcmds[k][0])){
-    //       msg.reply("Bro don't even try");
-    //     }
-    // }
-
-    //Help command
+ 
     if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
       
         const embed = new RichEmbed()
@@ -100,18 +59,7 @@ if(msg.author.bot) return;
     }
 
     //Advanced commands
-    if(msg.content.startsWith('!lookup') && msg.channel.name === 'bot-cmds'){
-      let messageArray = msg.content.split(" ");
-      let args = messageArray.slice(1);
-      msg.reply("https://driedsponge.net/controller.php?id="+args);  
-             
-    }else if(msg.content === "!lookup"){
-      msg.delete();
-      msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
-      msg.delete(7000)
-      
-      });
-  }
+    
 
 });
 
