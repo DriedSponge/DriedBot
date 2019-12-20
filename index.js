@@ -20,7 +20,7 @@ fs.readdir("./cmds/", (err, files)=> {
   jsfiles.forEach((f,i) => {
     let props = require(`./cmds/${f}`)
     console.log(`${i +1 }: ${f} loaded!`);
-    client.commands.set(props.help.name, props);
+    client.commands.set(props.help.name,props.help.description, props);
 
   });
 });
@@ -46,10 +46,10 @@ if(msg.author.bot) return;
         .setTitle('Commands')
         .setColor(0x007BFF)
         .setDescription('**Here is the list of all of our commands:**')
-        for(k in cmdshelp){
-          embed.addField(cmdshelp[k][0],cmdshelp[k][1])
-        }
-        
+          client.commands.forEach((i,f) => {
+            embed.addField(f,i)
+            console.log(f);
+          });  
         msg.reply(embed);               
       }else if(msg.content === "!help"){
         msg.delete();
@@ -57,9 +57,7 @@ if(msg.author.bot) return;
         msg.delete(7000)
         });
     }
-
-    //Advanced commands
-    
+  
 
 });
 
