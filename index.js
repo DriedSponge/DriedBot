@@ -8,7 +8,7 @@ const fs = require("fs");
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
-
+client.commandshelp = new Discord.Collection();
 fs.readdir("./cmds/", (err, files)=> {
   if(err) console.error(err);
   let jsfiles = files.filter(f => f.split(".").pop() === "js");
@@ -20,8 +20,8 @@ fs.readdir("./cmds/", (err, files)=> {
   jsfiles.forEach((f,i) => {
     let props = require(`./cmds/${f}`)
     console.log(`${i +1 }: ${f} loaded!`);
-    client.commands.set(props.help.name, [props.help.description,props.help.syntax], props);
-    console.log(client.commands);
+    client.commands.set(props.help.name, props);
+    client.commandshelp.set(props.help.name, [props.help.description,props.help.syntax], props);
   });
 });
 client.on('ready', () =>{
@@ -46,7 +46,7 @@ if(msg.author.bot) return;
         .setTitle('Commands')
         .setColor(0x007BFF)
         .setDescription('**Here is the list of all of our commands:**')
-          client.commands.forEach((f,i) => {
+        client.commandshelp.forEach((f,i) => {
             embed.addField(f[1],f[0])
             console.log(f[1]);
           });  
