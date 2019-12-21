@@ -8,7 +8,7 @@ const fs = require("fs");
 const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
-
+client.commandshelp = new Discord.Collection();
 fs.readdir("./cmds/", (err, files)=> {
   if(err) console.error(err);
   let jsfiles = files.filter(f => f.split(".").pop() === "js");
