@@ -20,8 +20,8 @@ fs.readdir("./cmds/", (err, files)=> {
   jsfiles.forEach((f,i) => {
     let props = require(`./cmds/${f}`)
     console.log(`${i +1 }: ${f} loaded!`);
-    client.commands.set(props.help.name,props.help.description, props);
-
+    client.commands.set(props.help.name, [props.help.description,props.help.syntax], props);
+    console.log(client.commands);
   });
 });
 client.on('ready', () =>{
@@ -43,12 +43,12 @@ if(msg.author.bot) return;
     if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
       
         const embed = new RichEmbed()
-        .setTitle('Commands')
+        .setTitle('Help')
         .setColor(0x007BFF)
         .setDescription('**Here is the list of all of our commands:**')
-          client.commands.forEach((i,f) => {
-            embed.addField(f,i)
-            console.log(f);
+          client.commands.forEach((f,i) => {
+            embed.addField(f[1],f[0])
+            
           });  
         msg.reply(embed);               
       }else if(msg.content === "!help"){

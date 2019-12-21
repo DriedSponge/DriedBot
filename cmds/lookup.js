@@ -14,5 +14,6 @@ module.exports.run = async (client,msg,args) => {
 
 module.exports.help = {
     name: "lookup",
-    description: "test",
+    description: "Look up any info on a steam user.",
+    syntax: "!lookup [STEAMID, CUSTOM URL]",
 }
