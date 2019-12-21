@@ -48,7 +48,6 @@ if(msg.author.bot) return;
         .setDescription('**Here is the list of all of our commands:**')
         client.commandshelp.forEach((f,i) => {
             embed.addField(f[1],f[0])
-            console.log(f[1]);
           });  
         msg.reply(embed);               
       }else if(msg.content === "!help"){
