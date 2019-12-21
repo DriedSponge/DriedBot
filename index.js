@@ -43,12 +43,12 @@ if(msg.author.bot) return;
     if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
       
         const embed = new RichEmbed()
-        .setTitle('Commands')
+        .setTitle('Help')
         .setColor(0x007BFF)
         .setDescription('**Here is the list of all of our commands:**')
           client.commands.forEach((f,i) => {
             embed.addField(f[1],f[0])
-            console.log(f[1]);
+            
           });  
         msg.reply(embed);               
       }else if(msg.content === "!help"){
