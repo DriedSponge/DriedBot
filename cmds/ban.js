@@ -35,5 +35,6 @@ module.exports.run = async (client,msg,args) => {
 }
 module.exports.help = {
     name: "ban",
-    description: "test",
+    description: "Ban a user (Admins only)",
+    syntax: "!ban [USER] [REASON]",
 }

@@ -35,5 +35,6 @@ module.exports.run = async (client,msg,args) => {
 }
 module.exports.help = {
     name: "kick",
-    description: "test",
+    description: "Kick a user (Admins only)",
+    syntax: "!kick [USER] [REASON]",
 }
