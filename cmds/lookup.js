@@ -1,9 +1,12 @@
 
 module.exports.run = async (client,msg,args) => {
     if(msg.channel.name === 'bot-cmds'){
-        let check = args.replace(/\s/g, '');
-        msg.reply(`https://driedsponge.net/controller.php?id=${check}`);  
-               
+        check = args.join("");
+        if(check){
+         msg.reply(`https://driedsponge.net/controller.php?id=${check}`);  
+        }else{
+            msg.reply(`Please specify any form of SteamID or vanity URL`)
+        }   
       }else{
         msg.delete();
         msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
