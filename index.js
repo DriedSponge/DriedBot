@@ -52,7 +52,7 @@ if(msg.author.bot) return;
         msg.reply(embed);               
       }else if(msg.content === "!help"){
         msg.delete();
-        msg.reply('Please use bot commands in '+  client.channels.find(x => x.name === 'bot-cmds')).then(msg => {
+        msg.reply('Please use bot commands in the bot comamnds channel').then(msg => {
         msg.delete(7000)
         });
     }
