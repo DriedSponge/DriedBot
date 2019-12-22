@@ -1,8 +1,7 @@
 
 module.exports.run = async (client,msg,args) => {
     if(msg.channel.name === 'bot-cmds'){
-        let check = args.replace(/\s/g, '');
-        msg.reply(`https://driedsponge.net/controller.php?id=${check}`);  
+        msg.reply("https://driedsponge.net/controller.php?id="+args);  
                
       }else{
         msg.delete();
