@@ -46,6 +46,7 @@ conn.connect(function(err) {
 
 client.on('message', async (msg) =>{
 if(msg.author.bot) return;
+if(msg.channel.type == "dm") return;
     let messageArray = msg.content.split(" ");
     let command =  messageArray[0];
     let args = messageArray.slice(1);     
