@@ -27,7 +27,9 @@ module.exports.run = async (client,msg,args,conn) => {
 }else{
      msg.delete();
     msg.reply('Please use bot commands in the bot comamnds channel').then(msg => {
-    msg.delete(7000)
+    msg.delete(7000
+      
+      )
     });
 }
 
