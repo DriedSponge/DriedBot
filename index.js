@@ -4,9 +4,11 @@ const Discord = require('discord.js');
 const { Client, RichEmbed } = require('discord.js');
 
 
+const mysql = require('mysql');
+
+
 const fs = require("fs");
 const client = new Discord.Client();
-
 client.commands = new Discord.Collection();
 client.commandshelp = new Discord.Collection();
 fs.readdir("./cmds/", (err, files)=> {
@@ -29,8 +31,18 @@ client.on('ready', () =>{
   client.user.setPresence({ status: 'online', game: { name: '!help | DriedSponge.net' } });
   console.log(client.commands);
 });
-
-
+const conn = mysql.createConnection({
+  host     : 'db.hexaneweb.com',
+  port     : '3306',
+  user     : 'driedspo_netuser',
+  password : 'U7MQioT0uiaoUzzdKnR3sXEOIts4Jt08',
+  database : 'driedspo_net',
+  charset : 'utf8mb4'
+});
+conn.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 client.on('message', async (msg) =>{
 if(msg.author.bot) return;
@@ -38,7 +50,7 @@ if(msg.author.bot) return;
     let command =  messageArray[0];
     let args = messageArray.slice(1);     
     let cmd = client.commands.get(command.slice(prefix.length));
-        if(cmd) cmd.run(client,msg,args);
+        if(cmd) cmd.run(client,msg,args,conn);
  
     if(msg.content === "!help" && msg.channel.name === 'bot-cmds'){
       
