@@ -26,11 +26,15 @@ fs.readdir("./cmds/", (err, files)=> {
     client.commandshelp.set(props.help.name, [props.help.description,props.help.syntax], props);
   });
 });
+
+
 client.on('ready', () =>{
   console.log('Bot is now connected');
   client.user.setPresence({ status: 'online', game: { name: '!help | DriedSponge.net' } });
   console.log(client.commands);
 });
+
+
 const conn = mysql.createConnection({
   host     : 'db.hexaneweb.com',
   port     : '3306',
