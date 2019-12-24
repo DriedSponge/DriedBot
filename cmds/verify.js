@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 
 module.exports.run = async (client,msg,args,conn) => {
   if(msg.channel.name === 'bot-cmds'){
+    let logchannel = client.channels.find(ch => ch.name === 'discord-logs');
   conn.query(`SELECT verifyid, discorduser,stamp,steamid,givenrole FROM discord WHERE discordid = ${msg.author.id}`, function (err, check) {
     if (err) throw err;
     if(check[0] && check[0].steamid !== null){
@@ -13,12 +14,25 @@ module.exports.run = async (client,msg,args,conn) => {
           console.log("Record has been updated");
           msg.member.addRole("526657280859439116");
           msg.reply(`You have been verified as https://steamcommunity.com/profiles/${check[0].steamid} and you've been given the member role.`);
+          let embed = new Discord.RichEmbed()
+            .setTitle(`Verification`)
+            .setColor(0x00FF44)
+            .setThumbnail(msg.author.avatarURL)
+            .setDescription(`${msg.author} has recieved their roles.`)
+            logchannel.send(embed);
         });
-      }
+        
+        }
 
     }else{
     msg.reply("Check your DMs for a url to verify yourself. If you do not see a message, change your privacy settings then try again.")
     let verifyid = Math.floor((Math.random() * 100000000) + 1);
+    let embed = new Discord.RichEmbed()
+    .setTitle(`Verification`)
+    .setColor(0xFFCC00)
+    .setThumbnail(msg.author.avatarURL)
+    .setDescription(`${msg.author} has started the verification process, their code is: ||${verifyid}||`)
+    logchannel.send(embed);
       if(check[0] && check[0].verifyid !== null){
         conn.query(`UPDATE discord SET verifyid = '${verifyid}' WHERE discordid = '${msg.author.id}'`, function (err, result) {
           if (err) throw err;
