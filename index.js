@@ -44,6 +44,34 @@ conn.connect(function(err) {
   console.log("Connected!");
 });
 
+
+var minutes = 5, interval = minutes * 60 * 1000;
+setInterval(function() {
+ // console.log("I am doing my 5 minutes check");
+  conn.query(`SELECT * FROM discord`, function (err, check) {
+    if (err) throw err;
+    for(k in check){
+      if(check[k].givenrole == "NO" && check[k].verifyid == "VERIFIED"){
+        let member = client.guilds.find(g => g.id === '506684375543447573').member(check[k].discordid);
+        conn.query(`UPDATE discord SET givenrole = 'YES' WHERE discordid = '${check[k].discordid}'`, function (err, result) {
+          if (err) throw err;
+            member.addRole("526657280859439116");
+            let embed = new Discord.RichEmbed()
+              .setTitle(`Verification`)
+              .setColor(0x00FF44)
+              .setThumbnail(member.user.avatarURL)
+              .setDescription(`${member.user} has recieved their roles.`)
+              client.channels.find(ch => ch.id === '506832700502704148').send(embed);
+        });
+          
+
+      }
+    }
+  });
+}, interval);
+
+
+
 client.on('message', async (msg) =>{
 if(msg.author.bot) return;
 if(msg.channel.type == "dm") return;
