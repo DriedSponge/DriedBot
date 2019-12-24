@@ -11,7 +11,6 @@ module.exports.run = async (client,msg,args) => {
         .addField("Members:",msg.guild.memberCount,true)
         .addField("Region:",msg.guild.region,true)
         .addField("Server Owner:",msg.guild.owner.user.tag,true)
-        //.addField("User",user)
         msg.channel.send(infoembed);
     }else{
         msg.reply(`Data on this server seems to be unavliable`)
