@@ -47,7 +47,7 @@ conn.connect(function(err) {
 
 var minutes = 5, interval = minutes * 60 * 1000;
 setInterval(function() {
- // console.log("I am doing my 5 minutes check");
+ console.log("I am doing my 5 minutes check");
   conn.query(`SELECT * FROM discord`, function (err, check) {
     if (err) throw err;
     for(k in check){
