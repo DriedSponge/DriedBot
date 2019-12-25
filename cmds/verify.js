@@ -41,7 +41,6 @@ module.exports.run = async (client,msg,args,conn) => {
 
 
     }else{
-    msg.reply("Check your DMs for a url to verify yourself. If you do not see a message, change your privacy settings then try again.")
     let verifyid = Math.floor((Math.random() * 10000000000) + 1);
     let embed = new Discord.RichEmbed()
     .setTitle(`Verification`)
@@ -53,13 +52,15 @@ module.exports.run = async (client,msg,args,conn) => {
         conn.query(`UPDATE discord SET verifyid = '${verifyid}' WHERE discordid = '${msg.author.id}'`, function (err, result) {
           if (err) throw err;
           console.log("Record has been updated");
-          msg.author.send(`Go to https://driedsponge.net/verify.php?verify=${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`);
+          msg.author.send(`Go to https://driedsponge.net/verify.php?verify=${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`)
+          .catch(() => msg.reply("I could not send you your url because of your privacy settings. Please change your privacy settings to allow direct messages from server members, then try again."));
         });
       }else{
       conn.query(`INSERT INTO discord (discordid, verifyid, discorduser) VALUES ('${msg.author.id}','${verifyid}','${msg.author.tag}')`, function (err, result) {
         if (err) throw err;
         console.log("Record has been inserted");
-        msg.author.send(`Go to https://driedsponge.net/verify.php?verify=${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`);
+        msg.author.send(`Go to https://driedsponge.net/verify.php?verify=${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`)
+        .catch(() => msg.reply("I could not send you your url because of your privacy settings. Please change your privacy settings to allow direct messages from server members, then try again."));
       });
     }
   }
