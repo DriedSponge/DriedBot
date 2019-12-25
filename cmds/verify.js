@@ -53,13 +53,13 @@ module.exports.run = async (client,msg,args,conn) => {
         conn.query(`UPDATE discord SET verifyid = '${verifyid}' WHERE discordid = '${msg.author.id}'`, function (err, result) {
           if (err) throw err;
           console.log("Record has been updated");
-          msg.author.send(`Enter ||${verifyid}|| at https://driedsponge.net/verify.php to verify your self. The code will expire in five minutes. **DO NOT SHARE THIS CODE WITH ANYONE ELSE**`);
+          msg.author.send(`Go to https://driedsponge.net/verify.php?verify=${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`);
         });
       }else{
       conn.query(`INSERT INTO discord (discordid, verifyid, discorduser) VALUES ('${msg.author.id}','${verifyid}','${msg.author.tag}')`, function (err, result) {
         if (err) throw err;
         console.log("Record has been inserted");
-        msg.author.send(`Enter ||${verifyid}|| at https://driedsponge.net/verify.php to verify your self. The code will expire in five minutes. **DO NOT SHARE THIS CODE WITH ANYONE ELSE**`);
+        msg.author.send(`Go to https://driedsponge.net/verify.php?verify=${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`);
       });
     }
   }
