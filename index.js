@@ -67,8 +67,18 @@ setInterval(function() {
               .setDescription(`${member.user} has recieved their roles.`)
               client.channels.find(ch => ch.id === '506832700502704148').send(embed);
         });
-          
-
+      }else if(check[k].verifyid == "UNVERIFIED"){
+        let member = client.guilds.find(g => g.id === '506684375543447573').member(check[k].discordid);
+        member.removeRole("526657280859439116");
+        let embed = new Discord.RichEmbed()
+          .setTitle(`Verification`)
+          .setColor(0xFF0000)
+          .setThumbnail(member.user.avatarURL)
+          .setDescription(`${member.user} has lost their roles!`)
+          client.channels.find(ch => ch.id === '506832700502704148').send(embed);
+      conn.query(`DELETE FROM discord WHERE discordid = '${check[k].discordid}'`, function (err, result) {
+       console.log("removed role from someone")
+      });
       }
     }
   });
