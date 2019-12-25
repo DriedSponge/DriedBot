@@ -42,7 +42,7 @@ module.exports.run = async (client,msg,args,conn) => {
 
     }else{
     msg.reply("Check your DMs for a url to verify yourself. If you do not see a message, change your privacy settings then try again.")
-    let verifyid = Math.floor((Math.random() * 100000000) + 1);
+    let verifyid = Math.floor((Math.random() * 10000000000) + 1);
     let embed = new Discord.RichEmbed()
     .setTitle(`Verification`)
     .setColor(0xFFCC00)
