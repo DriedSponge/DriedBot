@@ -1,10 +1,10 @@
 module.exports.run = async (client,msg,args) => {
     if(msg.channel.name === 'bot-cmds'){
         if(msg.author.id === "283710670409826304"){
-        check = args.join("");
+       
         if(check){
-         msg.reply(`The bots status has been changed to **${check}**`);  
-            client.user.setPresence({ status: 'online', game: { name: `!help | ${check}`}});
+         msg.reply(`The bots status has been changed to **${args}**`);  
+            client.user.setPresence({ status: 'online', game: { name: `!help | ${args}`}});
         }else{
             msg.reply(`Please specify a new status`)
         }
