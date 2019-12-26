@@ -139,6 +139,19 @@ client.on('guildMemberAdd', newmember => {
     // Send the message to a designated channel on a server:
     const channel = oldmember.guild.channels.find(ch => ch.name === 'discord-logs');
     channel.send(`${oldmember} left the server. We now have **${oldmember.guild.memberCount}** members.`);
+    let logchannel = client.channels.find(ch => ch.name === 'discord-logs');
+    let kickembed = new Discord.RichEmbed()
+    .setTitle(`Unverifed ${oldmember.user.tag}`)
+    .setColor(0xFF0000)
+    .setThumbnail(oldmember.user.avatarURL)
+    .addField("Admin",oldmember.user.author,true)
+    .addField("User",oldmember.user,true)
+    logchannel.send(kickembed);
+    conn.query(`DELETE FROM discord WHERE discordid=${oldmember.user.id}`, function (err, result) {
+      if (err) throw err;
+      
+    });    
+
     
   });
 
