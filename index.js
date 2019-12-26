@@ -123,16 +123,8 @@ if(msg.channel.type == "dm") return;
 client.on('guildMemberAdd', newmember => {
     // Send the message to a designated channel on a server:
     const channel = newmember.guild.channels.find(ch => ch.name === 'hello');
-    channel.send(`**Welcome to the server,** ${newmember}. We now have **${newmember.guild.memberCount}** members!`);
-    const embed = new RichEmbed()
-      .setTitle('Welcome to my man cave!')
-      .setColor(0x007BFF)
-      .setDescription('Welcome to my man cave! Please be sure to review the rules, thank you! Here are some useful links:')
-      .addField(`My Website`,`https://driedsponge.net`)
-      .addField(`Discord Invite Link`,`https://driedsponge.net/discord`)
-      .addField(`Advertise in my discord`,`https://driedsponge.net/advertise.php`)
-      .setFooter("This message is approved by DriedSponge");
-      newmember.send(embed);
+    channel.send(`**Welcome to the server,** ${newmember}. We now have **${newmember.guild.memberCount}** members! To get the member role, you must type **!verify** in the bot-cmds channel and follow the instructions.`);
+    
   });
 
   client.on('guildMemberRemove', oldmember => {
