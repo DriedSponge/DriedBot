@@ -3,7 +3,7 @@ module.exports.run = async (client,msg,args) => {
     if(msg.channel.name === 'bot-cmds'){
         check = args.join("");
         if(check){
-         msg.reply(`https://driedsponge.net/controller.php?id=${check}`);  
+         msg.reply(`https://driedsponge.net/lookup/${check}`);  
         }else{
             msg.reply(`Please specify any form of SteamID or vanity URL`)
         }   
