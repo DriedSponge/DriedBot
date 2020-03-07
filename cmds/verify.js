@@ -1,12 +1,21 @@
 const Discord = require('discord.js');
-
+function SendCode(to,msg,verifyid){
+  const verifyembed  = new Discord.RichEmbed()
+	.setColor('#00FF44')
+	.setTitle('Click Here To Verify')
+	.setURL(`https://driedsponge.net/verify/${verifyid}`)
+	.setDescription("Open the link and login into steam to connect your discord account to your steam account. You will recive your roles within five minutes of verification.")
+	.setThumbnail('https://i.driedsponge.net/images/png/2avNF.png')
+	.setTimestamp()
+  to.send(verifyembed)
+  .catch(() => msg.reply("I could not send you your url because of your privacy settings. Please change your privacy settings to allow direct messages from server members, then try again."));
+}
 module.exports.run = async (client,msg,args,conn) => {
   if(msg.channel.name === 'bot-cmds'){
     let logchannel = client.channels.find(ch => ch.name === 'discord-logs');
   conn.query(`SELECT verifyid, discorduser,stamp,steamid,givenrole FROM discord WHERE discordid = ${msg.author.id}`, function (err, check) {
     if (err) throw err;
     if(check[0] && check[0].steamid !== null){
-
       if(check[0].verifyid === "VERIFIED"){
       if(check[0].givenrole === "YES"){
         msg.reply(`You are already verified as https://steamcommunity.com/profiles/${check[0].steamid} If this is not your steam account please let me or a moderator know`);
@@ -22,7 +31,7 @@ module.exports.run = async (client,msg,args,conn) => {
             .setThumbnail(msg.author.avatarURL)
             .setDescription(`${msg.author} has recieved their roles.`)
             logchannel.send(embed);
-        });
+         });
         
         }
       }else if(check[0].verifyid = "UNVERIFIED"){
@@ -52,15 +61,14 @@ module.exports.run = async (client,msg,args,conn) => {
         conn.query(`UPDATE discord SET verifyid = '${verifyid}' WHERE discordid = '${msg.author.id}'`, function (err, result) {
           if (err) throw err;
           console.log("Record has been updated");
-          msg.author.send(`Go to https://driedsponge.net/verify/${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`)
-          .catch(() => msg.reply("I could not send you your url because of your privacy settings. Please change your privacy settings to allow direct messages from server members, then try again."));
+          SendCode(msg.author,msg,verifyid)
+
         });
       }else{
       conn.query(`INSERT INTO discord (discordid, verifyid, discorduser) VALUES ('${msg.author.id}','${verifyid}','${msg.author.tag.replace(/([\uE000-\uF8FF]|\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDDFF])/g, '')}')`, function (err, result) {
         if (err) throw err;
         console.log("Record has been inserted");
-        msg.author.send(`Go to https://driedsponge.net/verify/${verifyid} to verify yourself. The link will expire in five minutes. **DO NOT SHARE THIS LINK WITH ANYONE ELSE**`)
-        .catch(() => msg.reply("I could not send you your url because of your privacy settings. Please change your privacy settings to allow direct messages from server members, then try again."));
+        SendCode(msg.author,msg,verifyid)
       });
     }
   }
