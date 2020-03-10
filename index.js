@@ -46,11 +46,11 @@ client.on('ready', () => {
 
 
 const conn = mysql.createConnection({
-  host: 'db.hexaneweb.com',
+  host: '73.59.72.29',
   port: '3306',
-  user: 'driedspo_netuser',
-  password: 'U7MQioT0uiaoUzzdKnR3sXEOIts4Jt08',
-  database: 'driedspo_net',
+  user: 'networkuser',
+  password: '*#fj*2EhdFEmoUV^@zL0vTtfpsIF&U9ME&YCuKpF%NR2xjpcOVEJa61P2#rb9oJy!x3UxLL4Q7Lj',
+  database: 'network',
   charset: 'utf8mb4'
 });
 conn.connect(function (err) {
