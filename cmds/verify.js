@@ -17,10 +17,10 @@ module.exports.run = async (client,msg,args,conn) => {
     if (err) throw err;
     if(check[0] && check[0].steamid !== null){
       if(check[0].verifyid === "VERIFIED"){
-      if(check[0].givenrole === "YES"){
+      if(check[0].givenrole === 1){
         msg.reply(`You are already verified as https://steamcommunity.com/profiles/${check[0].steamid} If this is not your steam account please let me or a moderator know`);
       }else{       
-        conn.query(`UPDATE discord SET givenrole = 'YES' WHERE discordid = '${msg.author.id}'`, function (err, result) {
+        conn.query(`UPDATE discord SET givenrole = 1 WHERE discordid = '${msg.author.id}'`, function (err, result) {
           if (err) throw err;
           console.log("Record has been updated");
           msg.member.addRole("526657280859439116");

@@ -65,9 +65,9 @@ setInterval(function () {
   conn.query(`SELECT * FROM discord`, function (err, check) {
     if (err) throw err;
     for (k in check) {
-      if (check[k].givenrole == "NO" && check[k].verifyid == "VERIFIED") {
+      if (!check[k].givenrole && check[k].verifyid == "VERIFIED") {
         let member = client.guilds.find(g => g.id === '506684375543447573').member(check[k].discordid);
-        conn.query(`UPDATE discord SET givenrole = 'YES' WHERE discordid = '${check[k].discordid}'`, function (err, result) {
+        conn.query(`UPDATE discord SET givenrole = 1 WHERE discordid = '${check[k].discordid}'`, function (err, result) {
           if (err) throw err;
           member.addRole("526657280859439116");
           let embed = new Discord.RichEmbed()
