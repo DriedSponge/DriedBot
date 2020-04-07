@@ -24,7 +24,13 @@ module.exports.run = async (client,msg,args,conn) => {
           if (err) throw err;
           console.log("Record has been updated");
           msg.member.addRole("526657280859439116");
-          msg.reply(`You have been verified as https://steamcommunity.com/profiles/${check[0].steamid} and you've been given the member role.`);
+          let verifyembed = new Discord.RichEmbed()
+          .setTitle(`Verification Status`)
+          .setColor(0x00FF44)
+          .setThumbnail(msg.author.avatarURL)
+          .setDescription(`You have been verified as https://steamcommunity.com/profiles/${check[0].steamid} and you've been given the member role.`)
+           msg.reply(verifyembed);
+          
           let embed = new Discord.RichEmbed()
             .setTitle(`Verification`)
             .setColor(0x00FF44)
@@ -35,7 +41,12 @@ module.exports.run = async (client,msg,args,conn) => {
         
         }
       }else if(check[0].verifyid = "UNVERIFIED"){
-        msg.reply("I just check the database and it looks live you've been unverified. You just lost your memeber role")
+        let unverifyembed = new Discord.RichEmbed()
+        .setTitle(`Verification Status`)
+        .setColor(0xFF0000)
+        .setThumbnail(msg.author.avatarURL)
+        .setDescription(`I just check the database and it looks live you've been unverified. You just lost your memeber role.`)
+        msg.reply(unverifyembed);
         msg.member.removeRole("526657280859439116");
         let embed = new Discord.RichEmbed()
           .setTitle(`Verification`)
