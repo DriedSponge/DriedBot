@@ -18,7 +18,12 @@ module.exports.run = async (client,msg,args,conn) => {
     if(check[0] && check[0].steamid !== null){
       if(check[0].verifyid === "VERIFIED"){
       if(check[0].givenrole === 1){
-        msg.reply(`You are already verified as https://steamcommunity.com/profiles/${check[0].steamid} If this is not your steam account please let me or a moderator know`);
+        let alreadyverified = new Discord.RichEmbed()
+          .setTitle(`Verification Status`)
+          .setColor(0x00FF44)
+          .setThumbnail(msg.author.avatarURL)
+          .setDescription(`You are currently verified as https://steamcommunity.com/profiles/${check[0].steamid}. If this is not your steam account please let me or a moderator know.`)
+        msg.reply(alreadyverified);
       }else{       
         conn.query(`UPDATE discord SET givenrole = 1 WHERE discordid = '${msg.author.id}'`, function (err, result) {
           if (err) throw err;
