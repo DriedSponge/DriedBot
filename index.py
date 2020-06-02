@@ -26,27 +26,6 @@ async def on_ready():
     await client.change_presence(activity=discord.Game(name="!help"))
 
 
-@client.event
-async def one_member_join(member):
-    print(f'{member} has joined a server')
-
-
-@client.event
-async def on_member_remove(member):
-    print(f'{member} has left a server')
-
-
-# @client.command()
-# async def ping(ctx):
-#     await ctx.send(f'Pong! {round(client.latency) * 1000}ms')
-
-
-@client.command()
-async def test(ctx):
-    if ctx.message.channel.name == "general":
-        await ctx.send(ctx.message.channel.id)
-
-
 @client.command()
 async def clear(ctx, ammout=5):
     await ctx.channel.purge(limit=ammout)

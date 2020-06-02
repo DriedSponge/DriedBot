@@ -9,6 +9,7 @@ class Ban(commands.Cog):
 
     # commands
     @commands.command()
+    @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, *, reason='None'):
         if str(ctx.channel.type) != 'private':
             await member.ban(reason=reason)
@@ -19,6 +20,11 @@ class Ban(commands.Cog):
         else:
             response = await ctx.send(f'Please use this command in one of the servers channels')
             await response.delete(delay=5)
+
+    @ban.error
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send(f'{ctx.author.mention} Please specify a member to ban')
 
 
 def setup(client):

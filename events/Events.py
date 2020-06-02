@@ -24,6 +24,13 @@ class Events(commands.Cog):
                               color=0xFF0000)
         await welcomech.send(embed=embed)
 
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandNotFound):
+            response = await ctx.send(f'{ctx.author.mention} That command does not exist')
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send(f'{ctx.author.mention} You do not have permission to use that command')
+
 
 def setup(client):
     client.add_cog(Events(client))

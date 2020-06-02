@@ -9,6 +9,7 @@ class Kick(commands.Cog):
 
     # commands
     @commands.command()
+    @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason='None'):
         if str(ctx.channel.type) != 'private':
             await member.kick(reason=reason)
@@ -18,6 +19,13 @@ class Kick(commands.Cog):
             await ctx.send(embed=embed)
         else:
             response = await ctx.send(f'Please use this command in one of the servers channels')
+            await response.delete(delay=5)
+
+    @kick.error
+    async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.message.delete()
+            response = await ctx.send(f'{ctx.author.mention} Please specify a member to kick')
             await response.delete(delay=5)
 
 
