@@ -10,7 +10,7 @@ class Example(commands.Cog):
     # events
     @commands.Cog.listener()
     async def on_ready(self):
-        print('Bot Is ready via cog')
+        print('exampedkhafjahgfaej')
 
     # commands
     @commands.command(aliases=['8ball', 'eightball'])
