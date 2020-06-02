@@ -7,7 +7,7 @@ const { Client, RichEmbed } = require('discord.js');
 const mysql = require('mysql');
 
 function LinkEmbed(title, url, image, desc) {
-  const linkembed = new Discord.RichEmbed()
+  let linkembed = new Discord.RichEmbed()
     .setColor('#00FF44')
     .setTitle(title)
     .setURL(url)
@@ -124,7 +124,6 @@ client.on('message', async (msg) => {
 
 
 });
-
 
 
 
