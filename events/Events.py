@@ -34,7 +34,8 @@ class Events(commands.Cog):
             await ctx.send(f'{ctx.author.mention} You do not have permission to use that command')
         if isinstance(error, commands.BotMissingPermissions):
             await ctx.send(f'{ctx.author.mention} I do not have permission to do this')
-
+        if isinstance(error, commands.NotOwner):
+            await ctx.send(f'{ctx.author.mention} You must be the owner of the bot to perform this action')
 
 
 def setup(client):

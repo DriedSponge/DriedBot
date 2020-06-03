@@ -34,7 +34,7 @@ for filename in os.listdir('./events'):
 @client.event
 async def on_ready():
     print('Bot is ready')
-    await client.change_presence(activity=discord.Game(name="!help"))
+    await client.change_presence(activity=discord.Game(name="!help | DriedSponge.net"))
 
 
 client.run(data['token'])
