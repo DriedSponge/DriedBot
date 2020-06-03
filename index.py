@@ -4,6 +4,17 @@ import random
 import os
 from discord.ext import commands
 
+
+async def InBotsChannel(ctx):
+    if ctx.channel.name == 'bot-cmds':
+        print('true')
+        return True
+    else:
+        await ctx.send(f'{ctx.author.mention} Please use the bot commands channel')
+        print('false')
+        return False
+
+
 with open('botinfo.json') as file:
     data = json.load(file)
 
@@ -24,11 +35,6 @@ for filename in os.listdir('./events'):
 async def on_ready():
     print('Bot is ready')
     await client.change_presence(activity=discord.Game(name="!help"))
-
-
-@client.command()
-async def clear(ctx, ammout=5):
-    await ctx.channel.purge(limit=ammout)
 
 
 client.run(data['token'])

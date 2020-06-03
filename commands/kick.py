@@ -10,16 +10,13 @@ class Kick(commands.Cog):
     # commands
     @commands.command()
     @commands.has_permissions(kick_members=True)
+    @commands.guild_only()
     async def kick(self, ctx, member: discord.Member, *, reason='None'):
-        if str(ctx.channel.type) != 'private':
-            await member.kick(reason=reason)
-            embed = discord.Embed(title='Member Kicked',
-                                  description=f'{member.mention} has been kicked from the server!',
-                                  color=0xFF0000)
-            await ctx.send(embed=embed)
-        else:
-            response = await ctx.send(f'Please use this command in one of the servers channels')
-            await response.delete(delay=5)
+        await member.kick(reason=reason)
+        embed = discord.Embed(title='Member Kicked',
+                              description=f'{member.mention} has been kicked from the server!',
+                              color=0xFF0000)
+        await ctx.send(embed=embed)
 
     @kick.error
     async def on_command_error(self, ctx, error):

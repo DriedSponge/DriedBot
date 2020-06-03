@@ -10,6 +10,7 @@ class Ban(commands.Cog):
     # commands
     @commands.command()
     @commands.has_permissions(ban_members=True)
+    @commands.guild_only()
     async def ban(self, ctx, member: discord.Member, *, reason='None'):
         if str(ctx.channel.type) != 'private':
             await member.ban(reason=reason)
@@ -25,6 +26,8 @@ class Ban(commands.Cog):
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(f'{ctx.author.mention} Please specify a member to ban')
+        if isinstance(error, commands.BadArgument):
+            await ctx.send(f'{ctx.author.mention} Could not find member')
 
 
 def setup(client):

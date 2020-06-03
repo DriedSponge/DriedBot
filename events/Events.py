@@ -26,10 +26,15 @@ class Events(commands.Cog):
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
+        if isinstance(error, commands.NoPrivateMessage):
+            await ctx.send(f'{ctx.author.mention} Please use this command in the server')
         if isinstance(error, commands.CommandNotFound):
             response = await ctx.send(f'{ctx.author.mention} That command does not exist')
         if isinstance(error, commands.MissingPermissions):
             await ctx.send(f'{ctx.author.mention} You do not have permission to use that command')
+        if isinstance(error, commands.BotMissingPermissions):
+            await ctx.send(f'{ctx.author.mention} I do not have permission to do this')
+
 
 
 def setup(client):
