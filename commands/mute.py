@@ -12,15 +12,18 @@ class Mute(commands.Cog):
     @commands.has_permissions(kick_members=True, manage_messages=True)
     @commands.guild_only()
     async def mute(self, ctx, member: discord.Member, *, reason='None'):
-        role = ctx.guild.get_role(717783312709582889)
-        if role in member.roles:
-            await ctx.send(f'{ctx.author.mention} This user is already muted')
+        if ctx.author.top_role > member.top_role:
+            await ctx.send(f'{ctx.author.mention} You cannot mute a superior!')
         else:
-            await member.add_roles(role, reason=reason)
-            embed = discord.Embed(title='Member Muted',
-                                  description=f'{member.mention} has been muted!',
-                                  color=0xFFA800)
-            await ctx.send(embed=embed)
+            role = ctx.guild.get_role(717783312709582889)
+            if role in member.roles:
+                await ctx.send(f'{ctx.author.mention} This user is already muted')
+            else:
+                await member.add_roles(role, reason=reason)
+                embed = discord.Embed(title='Member Muted',
+                                      description=f'{member.mention} has been muted!',
+                                      color=0xFFA800)
+                await ctx.send(embed=embed)
 
     @mute.error
     async def on_command_error(self, ctx, error):

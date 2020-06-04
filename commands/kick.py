@@ -12,11 +12,14 @@ class Kick(commands.Cog):
     @commands.has_permissions(kick_members=True)
     @commands.guild_only()
     async def kick(self, ctx, member: discord.Member, *, reason='None'):
-        await member.kick(reason=reason)
-        embed = discord.Embed(title='Member Kicked',
-                              description=f'{member.mention} has been kicked from the server!',
-                              color=0xFF0000)
-        await ctx.send(embed=embed)
+        if ctx.author.top_role > member.top_role:
+            await ctx.send(f'{ctx.author.mention} You cannot kick a superior!')
+        else:
+            await member.kick(reason=reason)
+            embed = discord.Embed(title='Member Kicked',
+                                  description=f'{member.mention} has been kicked from the server!',
+                                  color=0xFF0000)
+            await ctx.send(embed=embed)
 
     @kick.error
     async def on_command_error(self, ctx, error):
@@ -24,6 +27,7 @@ class Kick(commands.Cog):
             await ctx.send(f'{ctx.author.mention} Please specify a member to kick')
         if isinstance(error, commands.BadArgument):
             await ctx.send(f'{ctx.author.mention} Could not find member')
+
 
 def setup(client):
     client.add_cog(Kick(client))
