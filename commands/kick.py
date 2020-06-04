@@ -21,10 +21,9 @@ class Kick(commands.Cog):
     @kick.error
     async def on_command_error(self, ctx, error):
         if isinstance(error, commands.MissingRequiredArgument):
-            await ctx.message.delete()
-            response = await ctx.send(f'{ctx.author.mention} Please specify a member to kick')
-            await response.delete(delay=5)
-
+            await ctx.send(f'{ctx.author.mention} Please specify a member to kick')
+        if isinstance(error, commands.BadArgument):
+            await ctx.send(f'{ctx.author.mention} Could not find member')
 
 def setup(client):
     client.add_cog(Kick(client))

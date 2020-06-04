@@ -13,7 +13,7 @@ class Events(commands.Cog):
         welcomech = member.guild.system_channel
         embed = discord.Embed(title='Welcome!',
                               description=f'{member.mention} joined the server! We now have {member.guild.member_count} members!',
-                              color=0x00FF44)
+                              color=0x166CD4)
         await welcomech.send(embed=embed)
 
     @commands.Cog.listener()
