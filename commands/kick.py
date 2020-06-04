@@ -12,8 +12,8 @@ class Kick(commands.Cog):
     @commands.has_permissions(kick_members=True)
     @commands.guild_only()
     async def kick(self, ctx, member: discord.Member, *, reason='None'):
-        if ctx.author.top_role > member.top_role:
-            await ctx.send(f'{ctx.author.mention} You cannot kick a superior!')
+        if ctx.author.top_role < member.top_role or ctx.author.top_role == member.top_role:
+            await ctx.send(f'{ctx.author.mention} You cannot kick someone with greater than or equal power!')
         else:
             await member.kick(reason=reason)
             embed = discord.Embed(title='Member Kicked',

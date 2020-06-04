@@ -12,8 +12,8 @@ class Ban(commands.Cog):
     @commands.has_permissions(ban_members=True)
     @commands.guild_only()
     async def ban(self, ctx, member: discord.Member, *, reason='None'):
-        if ctx.author.top_role > member.top_role:
-            await ctx.send(f'{ctx.author.mention} You cannot ban a superior!')
+        if ctx.author.top_role < member.top_role or ctx.author.top_role == member.top_role or member.bot:
+            await ctx.send(f'{ctx.author.mention} You cannot ban someone with greater than or equal power!')
         else:
             if str(ctx.channel.type) != 'private':
                 await member.ban(reason=reason)

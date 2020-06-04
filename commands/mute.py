@@ -12,8 +12,8 @@ class Mute(commands.Cog):
     @commands.has_permissions(kick_members=True, manage_messages=True)
     @commands.guild_only()
     async def mute(self, ctx, member: discord.Member, *, reason='None'):
-        if ctx.author.top_role > member.top_role:
-            await ctx.send(f'{ctx.author.mention} You cannot mute a superior!')
+        if ctx.author.top_role < member.top_role or ctx.author.top_role == member.top_role:
+            await ctx.send(f'{ctx.author.mention} You cannot mute someone with greater than or equal power!')
         else:
             role = ctx.guild.get_role(717783312709582889)
             if role in member.roles:
