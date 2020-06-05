@@ -41,6 +41,7 @@ class ModCog(commands.Cog, name='Moderation'):
     @commands.has_permissions(kick_members=True, manage_messages=True)
     @commands.guild_only()
     async def mute(self, ctx, member: discord.Member, *, reason='None'):
+        """Mute a user"""
         if ctx.author.top_role < member.top_role or ctx.author.top_role == member.top_role:
             await ctx.send(f'{ctx.author.mention} You cannot mute someone with greater than or equal power!')
         else:
@@ -66,6 +67,7 @@ class ModCog(commands.Cog, name='Moderation'):
     @commands.has_permissions(kick_members=True)
     @commands.guild_only()
     async def kick(self, ctx, member: discord.Member, *, reason='None'):
+        """Kick a user"""
         if ctx.author.top_role < member.top_role or ctx.author.top_role == member.top_role:
             await ctx.send(f'{ctx.author.mention} You cannot kick someone with greater than or equal power!')
         else:
@@ -88,6 +90,7 @@ class ModCog(commands.Cog, name='Moderation'):
     @commands.has_permissions(kick_members=True, manage_messages=True)
     @commands.guild_only()
     async def unmute(self, ctx, member: discord.Member):
+        """Unmute a muted user"""
         role = ctx.guild.get_role(717783312709582889)
         if role in member.roles:
             await member.remove_roles(role)
@@ -112,6 +115,7 @@ class ModCog(commands.Cog, name='Moderation'):
     @commands.has_permissions(manage_messages=True)
     @commands.guild_only()
     async def clear(self, ctx, ammount: int):
+        """Clear a channel of a specified ammount of messages"""
         await ctx.channel.purge(limit=ammount)
         channel = self.client.get_channel(717958874820378624)
         embed = discord.Embed(color=0x166CD4)

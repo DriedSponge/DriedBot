@@ -13,6 +13,7 @@ class General(commands.Cog):
     @commands.check(index.InBotsChannel)
     @commands.guild_only()
     async def ping(self, ctx):
+        """Pong! (get the bots ping)"""
         embed = discord.Embed(title='Pong!',
                               color=0x166CD4)
         embed.add_field(name='Ping', value=f'{round(self.client.latency * 1000)}ms')

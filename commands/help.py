@@ -4,7 +4,7 @@ from discord.ext import commands
 
 
 class Help(commands.Cog):
-    """Help Formatter"""
+    """Get all modules and commands"""
 
     def __init__(self, client):
         self.client = client
@@ -15,11 +15,16 @@ class Help(commands.Cog):
     @commands.guild_only()
     async def help(self, ctx, *cog):
         if not cog:
-            embed = discord.Embed(description='Commands')
+            embed = discord.Embed(color=0x166CD4)
             cog_desc = ''
+            embed.set_author(name='DriedSponge.net Help', icon_url=self.client.user.avatar_url, url='https://driedsponge.net')
+            embed.set_footer(text='Yes I did copy the style of the help menu from mee6 because it looks cool')
+            skipped = ['Events', 'Owner', 'Help']
             for x in self.client.cogs:
-                cog_desc += f'**{x}** - {self.client.cogs[x].__doc__}\n'
-            embed.add_field(name='Cogs', value=cog_desc)
+                if x in skipped:
+                    continue
+                embed.add_field(name=f'**{x}**', value=f'**`!help {x}`**')
+            # cog_desc += f'**{x}** - {self.client.cogs[x].__doc__}\n'
             await ctx.send(embed=embed)
         else:
             if len(cog) > 1:
@@ -30,26 +35,30 @@ class Help(commands.Cog):
                 for x in self.client.cogs:
                     for y in cog:
                         if x == y:
-                            embed = discord.Embed()
-                            scog_info = ''
+                            embed = discord.Embed(title=f'{y} Module', color=0x166CD4)
+                            scog_desc = ''
                             for c in self.client.get_cog(y).get_commands():
                                 if not c.hidden:
-                                    scog_info += f'**{c.name}** - {c.help}\n'
-                            embed.add_field(name=f'{cog[0]} Module', value=scog_info)
+                                    scog_desc += f'**`!{c.qualified_name} {c.signature}`** - {c.help}\n\n'
+                                    # embed.add_field(name=f'`!{c.qualified_name} {c.signature}`', value=f'{c.help}',
+                                    # inline=False)
                             found = True
+                            embed.set_author(name='DriedSponge.net Help', icon_url=self.client.user.avatar_url, url='https://driedsponge.net')
+                            embed.description = scog_desc
                 if not found:
-                    for p in self.client.cogs:
-                        print(p)
-                        for c in self.client.get_cog(p).commands():
+                    for x in self.client.cogs:
+                        for c in self.client.get_cog(x).get_commands():
                             if c.name == cog[0]:
-                                embed = discord.Embed()
-                                embed.add_field(name=f'{c.name} - {c.help}', value=f'Proper Syntax:')
+                                embed = discord.Embed(title=f'{c.name} command', color=0x166CD4)
+                                embed.description = f'**`!{c.qualified_name} {c.signature}`** - {c.help}\n\n'
+                                # embed.add_field(name=f'{c.name} - {c.help}', value=f'Proper Syntax: !{
+                                # c.qualified_name} {c.signature}')
+                                embed.set_author(name='DriedSponge.net Help', icon_url=self.client.user.avatar_url,
+                                                 url='https://driedsponge.net')
                         found = True
                         if not found:
                             embed = discord.Embed(description='Broken')
-                else:
-                    print('idk why i ahve this')
-            await ctx.send(embed=embed)
+                await ctx.send(embed=embed)
 
 
 def setup(client):
