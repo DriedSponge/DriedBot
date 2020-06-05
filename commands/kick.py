@@ -1,5 +1,6 @@
 import discord
 import random
+import index
 from discord.ext import commands
 
 
@@ -20,6 +21,7 @@ class Kick(commands.Cog):
                                   description=f'{member.mention} has been kicked from the server!',
                                   color=0xFF0000)
             await ctx.send(embed=embed)
+            await index.AdminLog('Kicked Member', ctx.author, member, reason, 3)
 
     @kick.error
     async def on_command_error(self, ctx, error):

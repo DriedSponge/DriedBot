@@ -1,5 +1,6 @@
 import discord
 import random
+import index
 from discord.ext import commands
 
 
@@ -17,10 +18,11 @@ class Ban(commands.Cog):
         else:
             if str(ctx.channel.type) != 'private':
                 await member.ban(reason=reason)
-                embed = discord.Embed(title='Member Banned',
-                                      description=f'{member.mention} has been banned from the server!',
+                embed = discord.Embed(description=f'**{member.mention} has been banned from the server!**',
                                       color=0xFF0000)
                 await ctx.send(embed=embed)
+                await index.AdminLog('Banned Member', ctx.author, member, reason, 3)
+
             else:
                 response = await ctx.send(f'Please use this command in one of the servers channels')
                 await response.delete(delay=5)

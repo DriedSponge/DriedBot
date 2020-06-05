@@ -1,5 +1,6 @@
 import discord
 import random
+import index
 from discord.ext import commands
 
 
@@ -15,10 +16,11 @@ class Unmute(commands.Cog):
         role = ctx.guild.get_role(717783312709582889)
         if role in member.roles:
             await member.remove_roles(role)
-            embed = discord.Embed(title='Member Unmuted',
-                                  description=f'{member.mention} has been unmuted!',
-                                  color=0xFFA800)
+            embed = discord.Embed(
+                                  description=f'**{member.mention} has been unmuted!**',
+                                  color=0x44B37F)
             await ctx.send(embed=embed)
+            await index.AdminLog('Unmuted Member', ctx.author, member, None, 1)
         else:
             await ctx.send(f'{ctx.author.mention} This user is not muted')
 

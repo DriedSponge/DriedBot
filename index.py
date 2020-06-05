@@ -1,6 +1,7 @@
 import json
 import discord
 import random
+import datetime
 import os
 from discord.ext import commands
 
@@ -35,6 +36,29 @@ for filename in os.listdir('./events'):
 async def on_ready():
     print('Bot is ready')
     await client.change_presence(activity=discord.Game(name="!help | DriedSponge.net"))
+
+
+# Logging
+async def AdminLog(action, admin, member, reason, status):
+    if status == 1:
+        color = 0x44B37F
+    elif status == 2:
+        color = 0xFFA800
+    elif status == 3:
+        color = 0xFF4040
+    elif status == 4:
+        color = 0x166CD4
+
+    channel = client.get_channel(717958874820378624)
+    embed = discord.Embed(title=action,
+                          color=color)
+    embed.add_field(name='User', value=member.mention, inline=True)
+    embed.add_field(name='Moderator', value=admin.mention, inline=True)
+    if reason is not None:
+        embed.add_field(name='Reason', value=reason, inline=True)
+    embed.timestamp = datetime.datetime.utcnow()
+    # embed.set_thumbnail(url=member.avatar_url)
+    await channel.send(embed=embed)
 
 
 client.run(data['token'])

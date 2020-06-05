@@ -1,5 +1,6 @@
 import discord
 import random
+import datetime
 from discord.ext import commands
 
 
@@ -21,8 +22,32 @@ class Events(commands.Cog):
         welcomech = member.guild.system_channel
         embed = discord.Embed(title='Goodbye...',
                               description=f'{member.name} left the server. We now have {member.guild.member_count} members.',
-                              color=0xFF0000)
+                              color=0xFF4040)
         await welcomech.send(embed=embed)
+
+    @commands.Cog.listener()
+    async def on_message_delete(self, message):
+        channel = self.client.get_channel(717958874820378624)
+        embed = discord.Embed(title="Message Deleted",
+                              color=0xFF4040)
+        embed.add_field(name='Message Author', value=message.author.mention, inline=True)
+        embed.add_field(name='Channel', value=message.channel.mention, inline=True)
+        embed.add_field(name='Message Contnent', value=message.content, inline=False)
+        embed.timestamp = datetime.datetime.utcnow()
+        await channel.send(embed=embed)
+
+    @commands.Cog.listener()
+    async def on_message_edit(self, before, after):
+        if not before.author.bot:
+            channel = self.client.get_channel(717958874820378624)
+            embed = discord.Embed(title="Message Edited",
+                                  color=0xFFA800)
+            embed.add_field(name='Message Author', value=before.author.mention, inline=True)
+            embed.add_field(name='Channel', value=before.channel.mention, inline=True)
+            embed.add_field(name='Before', value=before.content, inline=False)
+            embed.add_field(name='After', value=after.content, inline=False)
+            embed.timestamp = datetime.datetime.utcnow()
+            await channel.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error):

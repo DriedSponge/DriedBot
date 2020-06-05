@@ -1,5 +1,6 @@
 import discord
 import random
+import index
 from discord.ext import commands
 
 
@@ -20,10 +21,10 @@ class Mute(commands.Cog):
                 await ctx.send(f'{ctx.author.mention} This user is already muted')
             else:
                 await member.add_roles(role, reason=reason)
-                embed = discord.Embed(title='Member Muted',
-                                      description=f'{member.mention} has been muted!',
+                embed = discord.Embed(description=f'**{member.mention} has been muted!**',
                                       color=0xFFA800)
                 await ctx.send(embed=embed)
+                await index.AdminLog('Muted Member', ctx.author, member, reason, 2)
 
     @mute.error
     async def on_command_error(self, ctx, error):
