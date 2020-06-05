@@ -3,11 +3,12 @@ import index
 from discord.ext import commands
 
 
-class Ping(commands.Cog):
+class General(commands.Cog):
+    """General Commands"""
     def __init__(self, client):
         self.client = client
 
-    # commands
+    # Ping
     @commands.command()
     @commands.check(index.InBotsChannel)
     @commands.guild_only()
@@ -19,4 +20,4 @@ class Ping(commands.Cog):
 
 
 def setup(client):
-    client.add_cog(Ping(client))
+    client.add_cog(General(client))

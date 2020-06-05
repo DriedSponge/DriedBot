@@ -28,8 +28,8 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_message_delete(self, message):
         channel = self.client.get_channel(717958874820378624)
-        embed = discord.Embed(title="Message Deleted",
-                              color=0xFF4040)
+        embed = discord.Embed(color=0xFF4040)
+        embed.set_author(name='Message Deleted')
         embed.add_field(name='Message Author', value=message.author.mention, inline=True)
         embed.add_field(name='Channel', value=message.channel.mention, inline=True)
         embed.add_field(name='Message Contnent', value=message.content, inline=False)
@@ -40,8 +40,9 @@ class Events(commands.Cog):
     async def on_message_edit(self, before, after):
         if not before.author.bot:
             channel = self.client.get_channel(717958874820378624)
-            embed = discord.Embed(title="Message Edited",
+            embed = discord.Embed(
                                   color=0xFFA800)
+            embed.set_author(name='Message Edited')
             embed.add_field(name='Message Author', value=before.author.mention, inline=True)
             embed.add_field(name='Channel', value=before.channel.mention, inline=True)
             embed.add_field(name='Before', value=before.content, inline=False)

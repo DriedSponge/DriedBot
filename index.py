@@ -5,21 +5,22 @@ import datetime
 import os
 from discord.ext import commands
 
+with open('botinfo.json') as file:
+    data = json.load(file)
+
+client = commands.Bot(command_prefix=data['prefix'])
+
+client.remove_command('help')
+
 
 async def InBotsChannel(ctx):
     if ctx.channel.name == 'bot-cmds':
-        print('true')
         return True
     else:
         await ctx.send(f'{ctx.author.mention} Please use the bot commands channel')
         print('false')
         return False
 
-
-with open('botinfo.json') as file:
-    data = json.load(file)
-
-client = commands.Bot(command_prefix=data['prefix'])
 
 for filename in os.listdir('./commands'):
     if filename.endswith('.py'):
@@ -50,8 +51,9 @@ async def AdminLog(action, admin, member, reason, status):
         color = 0x166CD4
 
     channel = client.get_channel(717958874820378624)
-    embed = discord.Embed(title=action,
+    embed = discord.Embed(
                           color=color)
+    embed.set_author(name=action)
     embed.add_field(name='User', value=member.mention, inline=True)
     embed.add_field(name='Moderator', value=admin.mention, inline=True)
     if reason is not None:
@@ -59,6 +61,9 @@ async def AdminLog(action, admin, member, reason, status):
     embed.timestamp = datetime.datetime.utcnow()
     # embed.set_thumbnail(url=member.avatar_url)
     await channel.send(embed=embed)
+
+
+
 
 
 client.run(data['token'])
