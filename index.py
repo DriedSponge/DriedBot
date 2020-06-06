@@ -13,6 +13,10 @@ client = commands.Bot(command_prefix=data['prefix'])
 client.remove_command('help')
 
 
+def UTag(member):
+    return f'{member.name}#{member.discriminator}'
+
+
 async def InBotsChannel(ctx):
     if ctx.channel.name == 'bot-cmds':
         return True
@@ -52,7 +56,7 @@ async def AdminLog(action, admin, member, reason, status):
 
     channel = client.get_channel(506832700502704148)
     embed = discord.Embed(
-                          color=color)
+        color=color)
     embed.set_author(name=action)
     embed.add_field(name='User', value=member.mention, inline=True)
     embed.add_field(name='Moderator', value=admin.mention, inline=True)
@@ -61,9 +65,6 @@ async def AdminLog(action, admin, member, reason, status):
     embed.timestamp = datetime.datetime.utcnow()
     # embed.set_thumbnail(url=member.avatar_url)
     await channel.send(embed=embed)
-
-
-
 
 
 client.run(data['token'])
