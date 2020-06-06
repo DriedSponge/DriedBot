@@ -50,7 +50,7 @@ async def AdminLog(action, admin, member, reason, status):
     elif status == 4:
         color = 0x166CD4
 
-    channel = client.get_channel(717958874820378624)
+    channel = client.get_channel(506832700502704148)
     embed = discord.Embed(
                           color=color)
     embed.set_author(name=action)
