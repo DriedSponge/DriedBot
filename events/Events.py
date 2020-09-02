@@ -21,7 +21,7 @@ class Events(commands.Cog):
     async def on_member_remove(self, member):
         welcomech = member.guild.system_channel
         embed = discord.Embed(title='Goodbye...',
-                              description=f'{member.name} left the server. We now have {member.guild.member_count} members.',
+                              description=f'{member.name} left the server. We now have {membermember.guild.member_count} members.',
                               color=0xFF4040)
         await welcomech.send(embed=embed)
 

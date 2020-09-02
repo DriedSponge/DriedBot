@@ -17,7 +17,7 @@ class Help(commands.Cog):
         if not cog:
             embed = discord.Embed(color=0x166CD4)
             cog_desc = ''
-            embed.set_author(name='DriedSponge.net Help', icon_url=self.client.user.avatar_url, url='https://driedsponge.net')
+            embed.set_author(name='DriedSponge.net Help', icon_url=self.client.user.user.avatar_url, url='https://driedsponge.net')
             embed.set_footer(text='Yes I did copy the style of the help menu from mee6 because it looks cool')
             skipped = ['Events', 'Owner', 'Help']
             for x in self.client.cogs:
